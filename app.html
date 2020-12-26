@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Convert JSON Data to HTML Table</title>
+    <style>
+        th, td, p, input {
+            font:14px Verdana;
+        }
+        table, th, td 
+        {
+            border: solid 1px #DDD;
+            border-collapse: collapse;
+            padding: 2px 3px;
+            text-align: center;
+        }
+        th {
+            font-weight:bold;
+        }
+    </style>
+</head>
+<body>
+
+    <p>The JSON file is saved in 'database.txt'</p><br>
+    <a href="https://samples.openweathermap.org/data/2.5/weather?q=London,uk&appid=b6907d289e10d714a6e88b30761fae22"> See JSON data</a>
+<br><br>
+    <input type="button" onclick="CreateTableFromJSON()" value="Create Table From retrieved JSON" />
+    <p id="showData"></p>
+</body>
+
+<script>
+
+
+function CreateTableFromJSON(){
+
+ var dataBase= [{"coord":{"lon":-0.13,"lat":51.51},"weather":[{"id":300,"main":"Drizzle","description":"light intensity drizzle","icon":"09d"}],"base":"stations","main":{"temp":280.32,"pressure":1012,"humidity":81,"temp_min":279.15,"temp_max":281.15},"visibility":10000,"wind":{"speed":4.1,"deg":80},"clouds":{"all":90},"dt":1485789600,"sys":{"type":1,"id":5091,"message":0.0103,"country":"GB","sunrise":1485762037,"sunset":1485794875},"id":2643743,"name":"London","cod":200}];
+ 
+ // EXTRACT VALUE FOR HTML HEADER. 
+var upper=[];
+var inner=[];
+for(var i=0;i<dataBase.length;i++){
+    for(var key in dataBase[i]){
+        if(upper.indexOf(key)===-1){
+            upper.push(key);
+        
+        }
+
+    }
+    
+}
+
+// CREATE DYNAMIC TABLE.
+var table = document.createElement("table");
+
+// CREATE HTML TABLE HEADER ROW USING THE EXTRACTED HEADERS ABOVE.
+var tr = table.insertRow(-1);   
+
+for(var i=0;i<upper.length;i++){
+    var th=document.createElement("th");
+    th.innerHTML=upper[i];
+    tr.appendChild(th);
+}
+        // ADD JSON DATA TO THE TABLE AS ROWS.
+
+
+for(var i=0;i<dataBase.length;i++){
+    
+    tr = table.insertRow(-1);
+    
+    for(var j = 0; j < upper.length; j++){
+            var value;
+            
+            var th=document.createElement("th");
+            th.innerHTML=(inner[i]);
+            tr.appendChild(th);
+        }
+    }
+
+// FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
+var divContainer = document.getElementById("showData");
+    divContainer.innerHTML = "";
+    divContainer.appendChild(table);
+ 
+
+}
+   
+document.write(dataBase);
+
+</script>
+
+
+
+</html>
